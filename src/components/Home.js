@@ -1,6 +1,5 @@
 import React, { useContext, useRef } from 'react';
 import Title from './Title';
-import InteractiveCircles from './Circles';
 import DarkModeContext from './DarkModeContext';
 import ParallaxSection from './ParallaxSection';
 import HomeContext from './HomeContext';
@@ -11,10 +10,9 @@ function Home() {
     
     return (
         <HomeContext.Provider value={topRef}>
-            <div style={{position: 'relative', minHeight: '100vh'}}>
+            <div style={{position: 'relative', minHeight: '150vh'}}>
                 <Title isDarkMode={isDarkMode}/>
                 <ParallaxSection isDarkMode={isDarkMode} />
-                <InteractiveCircles />
             </div>
         </HomeContext.Provider>
     );

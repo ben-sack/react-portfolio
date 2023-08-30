@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef, useCallback } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import {
   materialOceanic,
@@ -11,44 +11,55 @@ function Browser({
   initialPosition = { x: 0, y: 0 },
 }) {
   const [position, setPosition] = useState(initialPosition);
-  const [isDragging, setIsDragging] = useState(false);
-  const browserRef = useRef(null);
-  const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
+  const [dragging, setDragging] = useState(false);
+  const [offset, setOffset] = useState({ x: 0, y: 0 });
 
-  const throttledMouseMove = useCallback((e) => {
-    if (isDragging) {
-      setPosition({
-        x: e.clientX - dragOffset.x,
-        y: e.clientY - dragOffset.y,
-      });
-    }
-  }, [isDragging, dragOffset]);
+  const preventDefault = useCallback((e) => e.preventDefault(), []);
 
-  const onMouseUp = () => setIsDragging(false);
+  const handleDragMove = useCallback((event) => {
+    if (!dragging) return;
 
-  const onStartDrag = (e) => {
-    e.preventDefault();
-    const browserRect = browserRef.current.getBoundingClientRect();
-    setDragOffset({
-      x: e.clientX - browserRect.left,
-      y: e.clientY - browserRect.top,
-    });
-    setIsDragging(true);
-  };
+    const clientX = event.type === 'touchmove' ? event.touches[0].clientX : event.clientX;
+    const clientY = event.type === 'touchmove' ? event.touches[0].clientY : event.clientY;
+
+    setPosition({ x: clientX - offset.x, y: clientY - offset.y });
+  }, [dragging, offset]);
+
+  const handleDragEnd = useCallback(() => {
+    setDragging(false);
+    document.removeEventListener('touchmove', preventDefault);
+  }, [preventDefault]);
+
+  const handleDragStart = useCallback((event) => {
+    const clientX = event.type === 'touchstart' ? event.touches[0].clientX : event.clientX;
+    const clientY = event.type === 'touchstart' ? event.touches[0].clientY : event.clientY;
+
+    setOffset({ x: clientX - position.x, y: clientY - position.y });
+    setDragging(true);
+    document.addEventListener('touchmove', preventDefault, { passive: false });
+  }, [position, preventDefault]);
 
   useEffect(() => {
-    window.addEventListener("mousemove", throttledMouseMove);
-    window.addEventListener("mouseup", onMouseUp);
+    const events = {
+      'mousemove': handleDragMove,
+      'mouseup': handleDragEnd,
+      'touchmove': handleDragMove,
+      'touchend': handleDragEnd
+    };
+
+    for (const [event, handler] of Object.entries(events)) {
+      window.addEventListener(event, handler);
+    }
 
     return () => {
-      window.removeEventListener("mousemove", throttledMouseMove);
-      window.removeEventListener("mouseup", onMouseUp);
+      for (const [event, handler] of Object.entries(events)) {
+        window.removeEventListener(event, handler);
+      }
     };
-  }, [throttledMouseMove]);
+  }, [handleDragMove, handleDragEnd]);
 
   return (
     <div
-      ref={browserRef}
       className="browser-window desktop-only"
       style={{
         backgroundColor: isDarkMode ? "#252f35" : "#f9f9f9",
@@ -56,8 +67,10 @@ function Browser({
         left: `${position.x}px`,
         top: `${position.y}px`,
       }}
+      onMouseDown={handleDragStart}
+      onTouchStart={handleDragStart}
     >
-      <div className="browser-header" onMouseDown={onStartDrag}>
+      <div className="browser-header">
         <div className="browser-dot red-dot"></div>
         <div className="browser-dot yellow-dot"></div>
         <div className="browser-dot green-dot"></div>

@@ -5,7 +5,8 @@ import Navbar from './components/Navbar';
 import Products from './components/Products';
 import Home from './components/Home';
 import DarkModeContext from './components/DarkModeContext';
-// import ParallaxBackground from './components/Circles';
+import InteractiveCircles from './components/Circles';
+
 
 function App() {
     const [isDarkMode, setIsDarkMode] = useState(
@@ -28,7 +29,7 @@ function App() {
         <DarkModeContext.Provider value={{ isDarkMode, setIsDarkMode }}>
             <Router>
                 <div className="App">
-                    {/* <ParallaxBackground isDarkMode={isDarkMode} /> */}
+                    <InteractiveCircles />
                     <Navbar isDarkMode={isDarkMode} />
                     <Routes>
                         <Route path="/" element={<Home />} />

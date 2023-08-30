@@ -11,6 +11,7 @@
   height: 100vh;
 }
 
+
 .home {
   padding: 40px;
   text-align: center;
@@ -189,7 +190,8 @@ body {
 /* Dark mode styles */
 @media (prefers-color-scheme: dark) {
   body {
-      background-color: #181818;
+      /* background-color: #181818; */
+      background-color: black;
       color: #e4e4e4;
   }
 
@@ -223,17 +225,6 @@ body {
   }
 }
 
-@media (max-width: 768px) {
-  .dock-item:hover {
-      transform: scale(1) !important;
-  }
-  .App { 
-    overflow-x: auto;
-  }
-  .desktop-only {
-    display: none !important;
-}
-}
 
 .parallax-container {
   position: fixed;
@@ -301,6 +292,11 @@ body {
 }
 
 
+/* @media (max-width: 768px) {
+  .parallax-section {
+
+  }
+} */
 .browser-window {
   position: absolute;
   border: 2px solid #ccc;
