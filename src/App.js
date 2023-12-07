@@ -6,6 +6,7 @@ import Home from './components/Home';
 import DarkModeContext from './components/DarkModeContext';
 import InteractiveCircles from './components/Circles';
 import ImageGallery from './components/Images';
+import { ImagesProvider } from './components/ImageContext';
 
 function App() {
     const [isDarkMode, setIsDarkMode] = useState(
@@ -26,16 +27,19 @@ function App() {
 
     return (
         <DarkModeContext.Provider value={{ isDarkMode, setIsDarkMode }}>
-            <Router>
-                <div className="App">
-                    <InteractiveCircles />
-                    <Navbar isDarkMode={isDarkMode} />
-                    <Routes>
-                        <Route path="/" element={<Home />} />
-                        <Route path="/images" element={<ImageGallery />} />
-                    </Routes>
-                </div>
-            </Router>
+                <Router>
+                    <ImagesProvider>
+                    <div className="App">
+                        <InteractiveCircles />
+                        <Navbar isDarkMode={isDarkMode} />
+                        <Routes>
+                            <Route path="/" element={<Home />} />
+                            <Route path="/images" element={<ImageGallery />} />
+                        </Routes>
+                    </div>
+                    </ImagesProvider>
+                </Router>
+
         </DarkModeContext.Provider>
     );
 }

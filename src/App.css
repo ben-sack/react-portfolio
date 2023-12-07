@@ -730,33 +730,3 @@ body {
     width: 100%;
   }
 }
-.tooltip {
-  position: relative; /* Required to position the tooltip */
-  display: inline-block; /* Ensures the tooltip is only as wide as the title */
-}
-
-.tooltip .tooltiptext {
-  visibility: hidden;
-  width: 120px;
-  background-color: #555;
-  color: #fff;
-  text-align: center;
-  padding: 5px 0;
-  border-radius: 6px;
-
-  /* Position the tooltip */
-  position: absolute;
-  z-index: 1;
-  bottom: 100%;
-  left: 50%;
-  margin-left: -60px; /* Use half of the width (120px / 2) to center the tooltip */
-
-  /* Fade in tooltip - hidden by default */
-  opacity: 0;
-  transition: opacity 0.3s;
-}
-
-.tooltip:hover .tooltiptext {
-  visibility: visible; /* Show the tooltip when hovering */
-  opacity: 1; /* Fade in */
-}
