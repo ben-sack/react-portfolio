@@ -2,11 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import './App.css';
 import Navbar from './components/Navbar';
-import Products from './components/Products';
 import Home from './components/Home';
 import DarkModeContext from './components/DarkModeContext';
 import InteractiveCircles from './components/Circles';
-
+import ImageGallery from './components/Images';
 
 function App() {
     const [isDarkMode, setIsDarkMode] = useState(
@@ -33,7 +32,7 @@ function App() {
                     <Navbar isDarkMode={isDarkMode} />
                     <Routes>
                         <Route path="/" element={<Home />} />
-                        <Route path="/products" element={<Products />} />
+                        <Route path="/images" element={<ImageGallery />} />
                     </Routes>
                 </div>
             </Router>

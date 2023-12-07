@@ -1,5 +1,7 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+
+
 import {
   materialOceanic,
   materialLight,
@@ -9,10 +11,17 @@ function Browser({
   isDarkMode,
   codeString,
   initialPosition = { x: 0, y: 0 },
+  isAnimationComplete
 }) {
   const [position, setPosition] = useState(initialPosition);
   const [dragging, setDragging] = useState(false);
   const [offset, setOffset] = useState({ x: 0, y: 0 });
+  const [hasBeenDragged, setHasBeenDragged] = useState(false);
+  const [screenHeight, setScreenHeight] = useState(window.innerHeight);
+  const [screensWidth, setScreenWidth] = useState(window.innerWidth);
+  const isMobile = window.innerWidth <= 768;
+
+  
 
   const preventDefault = useCallback((e) => e.preventDefault(), []);
 
@@ -31,13 +40,13 @@ function Browser({
   }, [preventDefault]);
 
   const handleDragStart = useCallback((event) => {
+    setHasBeenDragged(true);
     const clientX = event.type === 'touchstart' ? event.touches[0].clientX : event.clientX;
     const clientY = event.type === 'touchstart' ? event.touches[0].clientY : event.clientY;
-
+    event.preventDefault()
     setOffset({ x: clientX - position.x, y: clientY - position.y });
     setDragging(true);
-    document.addEventListener('touchmove', preventDefault, { passive: false });
-  }, [position, preventDefault]);
+  }, [position]);
 
   useEffect(() => {
     const events = {
@@ -47,6 +56,7 @@ function Browser({
       'touchend': handleDragEnd
     };
 
+    
     for (const [event, handler] of Object.entries(events)) {
       window.addEventListener(event, handler);
     }
@@ -58,31 +68,58 @@ function Browser({
     };
   }, [handleDragMove, handleDragEnd]);
 
+  const browserStyle = isAnimationComplete ? {
+      opacity: 1,
+      transform: `translateY(0)`,
+      filter: "blur(0px)",
+      transition: "opacity 1s ease, transform 1s ease, filter 1s ease"
+  } : {
+      opacity: 0,
+      transform: `translateY(50px)`, // Move it slightly down for melt effect
+      filter: "blur(5px)", // Apply blur
+      transition: "opacity 1s ease, transform 1s ease, filter 1s ease"
+  };
+
+
   return (
     <div
-      className="browser-window desktop-only"
+      className="browser-window"
       style={{
-        backgroundColor: isDarkMode ? "#252f35" : "#f9f9f9",
+        ...browserStyle,
+        backgroundColor: isDarkMode ? "#253237" : "#f9f9f9",
         position: "absolute",
         left: `${position.x}px`,
         top: `${position.y}px`,
+        maxWidth: screenHeight/1.5,
+        height: isMobile ? screenHeight/1.3 : screenHeight/1.5
       }}
-      onMouseDown={handleDragStart}
-      onTouchStart={handleDragStart}
     >
-      <div className="browser-header">
+
+      {/* Browser Header */}
+      <div className={`browser-header ${dragging ? 'dragging' : ''}`} 
+            onMouseDown={handleDragStart}
+            onTouchStart={handleDragStart}>
         <div className="browser-dot red-dot"></div>
         <div className="browser-dot yellow-dot"></div>
         <div className="browser-dot green-dot"></div>
       </div>
+
+      {/* Browser Content */}
       <div className="browser-content">
         <SyntaxHighlighter
           language="python"
+          lineProps={{style: {wordBreak: 'break-all', whiteSpace: 'pre-wrap'}}}
+          wrapLines={true} 
           style={isDarkMode ? materialOceanic : materialLight}
-          customStyle={{ overflow: "visible" }}
+          customStyle={{ 
+            height: isMobile ? screenHeight/1.3 : screenHeight/1.5,
+            whiteSpace: "pre-wrap",
+            wordWrap: "break-word",
+            overflowWrap: "break-word",
+        }}
           className="code-block"
         >
-          {codeString.trim()}
+            {codeString.trim()}
         </SyntaxHighlighter>
       </div>
     </div>

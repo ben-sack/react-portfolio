@@ -32,7 +32,7 @@ function ParallaxSection({ isDarkMode }) {
 
     const handleScroll = useCallback(() => {
         const { scrollY } = window;
-        const fadeStart = isMobile ? 250 : 550;
+        const fadeStart = isMobile ? 250 : 500;
         const maxScrollSpeed = isMobile ? 10 : 9; 
     
         let deltaY = scrollY - controlledScrollY;
@@ -51,8 +51,18 @@ function ParallaxSection({ isDarkMode }) {
 
     useEffect(() => {
         window.addEventListener("scroll", handleScroll);
-        return () => window.removeEventListener("scroll", handleScroll);
-    }, [handleScroll]);
+        if (isMobile) {
+            const scrollToBottom = setInterval(() => {
+                window.scrollTo(0, document.body.scrollHeight);
+            }, 1000); // Adjust speed as needed
+            return () => {
+                window.removeEventListener("scroll", handleScroll);
+                clearInterval(scrollToBottom);
+            }
+        } else {
+            return () => window.removeEventListener("scroll", handleScroll);
+        }
+    }, [handleScroll, isMobile]);
 
     return (
         <div 
@@ -77,4 +87,3 @@ function ParallaxSection({ isDarkMode }) {
 }
 
 export default ParallaxSection;
-

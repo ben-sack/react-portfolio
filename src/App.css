@@ -1,22 +1,42 @@
 .App {
   font-family: 'Arial', sans-serif;
   text-align: center;
-  padding: 20px;
-  /* background-color: #f4f4f4; */
-  color: #333;
+  color: white;
   font-family: 'Arial', sans-serif;
   display: flex;
   flex-direction: column;
-  /* min-height: 100vh; */
-  height: 100vh;
+  overflow: hidden;
+}
+
+/* For WebKit browsers */
+::-webkit-scrollbar {
+  width: 2.5px
+  /* display: none; */
+}
+
+::-webkit-scrollbar-track {
+  background-color: #000000; /* Color of the scrollbar track */
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #ffffff; /* Color of the scrollbar thumb */
+  border-radius: 1px; /* Border radius of the thumb */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #000000; /* Color of the scrollbar thumb on hover */
 }
 
 
 .home {
-  padding: 40px;
   text-align: center;
+  overflow: hidden;
+
 }
 
+body {
+  overflow-x: hidden;
+}
 
 h1 {
   background-color: #333;
@@ -25,7 +45,7 @@ h1 {
   border-radius: 6px;
 }
 
-.products {
+/* .products {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -35,15 +55,58 @@ h1 {
   background-color: #fff;
   border: 1px solid #ddd;
   border-radius: 6px;
-  width: 200px;
-  margin: 10px;
+  width: ;
+  height: 25rem;
+  margin: 1px;
   padding: 15px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   transition: transform 0.2s;
+} */
+
+.products {
+  column-count: 3;
+  width: 100%;
+}
+
+.product {
+  display: inline-block;
+  width: 100%;
+  margin-top: 0.2rem;
+  margin-left: 0.2rem;
+  border: 1px solid #d1d1d1;
+  break-inside: avoid; /* Prevents breaking the component across columns */
+  background-color: #f3f3f3;
+  box-sizing: border-box;
+}
+
+.product img { 
+  width: 100%;
+  height: 100%;
+}
+
+.product-details {
+  padding: 0.5rem;
+}
+
+/* Optional: Clearfix for products */
+.products::after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+
+/* Optional: Clearfix for products */
+.products::after {
+  content: "";
+  display: table;
+  clear: both;
 }
 
 .product:hover {
-  transform: translateY(-5px);
+  /* transform: translateY(-2px); */
+  opacity: 0.9;
+  cursor: pointer;
 }
 
 .product-name {
@@ -59,6 +122,7 @@ button {
   border-radius: 4px;
   cursor: pointer;
   transition: background-color 0.2s;
+  margin-bottom: 1rem;
 }
 
 button:hover {
@@ -131,7 +195,8 @@ button:hover {
   margin: 5px auto 0;
 }
 
-.dock-item:nth-child(1):hover {
+
+/* .dock-item:nth-child(1):hover {
   background-color: #f69851;
 
 }
@@ -148,7 +213,7 @@ button:hover {
 
 .dock-item:nth-child(4):hover {
   background-color: #4da7ed;
-}
+} */
 
 .dock a {
   padding: 7px 8px 8px 7px;
@@ -168,14 +233,9 @@ button:hover {
 
 .dock-item:hover {
   font-size: 32px; /* Enlarged size on hover */
+  background-color: rgba(255, 255, 255, 0.852);
 }
 
-
-
-/* height of navbar plus some space */
-.home, .products {
-  padding-top: 70px; 
-}
 
 body, html {
   margin: 0;
@@ -184,7 +244,7 @@ body, html {
 
 body {
   background-color: #f4f4f4;
-  color: #333;
+  color: white;
 }
 
 /* Dark mode styles */
@@ -202,10 +262,14 @@ body {
     color: white;
   }
   .navbar {
-      background: #211f21;
+      background: #211f2100;
   }
   .navbar svg {
     color: white;
+  }
+
+  .dock-item:hover {
+    background-color: rgba(0, 0, 0, 0.852);
   }
   .dropdown ul {
     background-color: rgba(255, 255, 255, 0.1);
@@ -246,28 +310,24 @@ body {
   position: fixed;
   top: 40%; 
   left: 50%; 
-  /* transform: translate(-50%, -50%); */
-  font-size: 2.5em;
+  font-size: 3em;
   z-index: 10; 
-  display: flex; /* This will lay out its children (the spans) side by side */
-  align-items: center; /* Aligns items vertically centered */
+  display: flex; /* Ensures its children are laid out side by side */
+  align-items: center; /* Vertically centers the items */
+  justify-content: center; /* Horizontally centers the items */
+  transform: translate(-50%, -50%); /* Centering trick */
 }
 
 .title .current {
-  margin-right: 0.2em;
+  margin-right: 0.2em; /* Some spacing between the words */
   font-weight: bold;
-
-  /* color: #ff4500; */
-  text-align: right; /* Ensures the text is right-aligned within its container */
-  min-width: 130px;  /* Adjust based on the width of the longest word + some padding */
-  display: inline-block; /* Allows us to set width */
+  /* Adjust based on the width of the longest word + some padding */
+  text-align: right; 
+  display: inline-block; 
 }
 
-.title .engineer {
-  font-weight: normal; /* You can adjust as needed */
+.title .engineer
 
-  position: relative;
-}
 .title.hide {
   visibility: hidden;
   opacity: 0;
@@ -292,11 +352,6 @@ body {
 }
 
 
-/* @media (max-width: 768px) {
-  .parallax-section {
-
-  }
-} */
 .browser-window {
   position: absolute;
   border: 2px solid #ccc;
@@ -307,8 +362,14 @@ body {
   /* background-color: #252f35; */
   z-index: 100;
   /* height: 600px; */
-  opacity: 0.9;
-  right: 50%;
+  /* opacity: 0; */
+  /* transform: translateY(-50px); this will start it slightly off-screen */
+  transition: opacity 1s ease-out, transform 1s ease-out;
+}
+
+.browser-window.animate-in {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .browser-header {
@@ -316,8 +377,28 @@ body {
   background-color: #e9e9e9;
   padding: 8px;
   align-items: center;
-  cursor: move;
+  cursor: url("/public/openhand.cur"), auto;
+  cursor: -webkit-grab;
+  cursor: -moz-grab;
+  cursor: -o-grab;
+  cursor: -ms-grab;
+  cursor: grab;
+  user-select: none;
+  -webkit-user-drag: none; 
 }
+
+
+.browser-header.dragging {
+  cursor: url("/public/closedhand.cur"), auto;
+  cursor: -webkit-grabbing;
+  cursor: -moz-grabbing;
+  cursor: -o-grabbing;
+  cursor: -ms-grabbing;
+  cursor: grabbing;
+  user-select: none;
+  -webkit-user-drag: none; 
+}
+
 
 .browser-dot {
   width: 12px;
@@ -332,6 +413,8 @@ body {
   padding: 10px;
   font-size: 14px;
   text-align: center;
+  overflow-y: auto;
+  /* max-height: 80%;  */
   /* color: black; */
 }
 .browser-dot:nth-child(1) {
@@ -356,4 +439,324 @@ body {
   animation-name: floatEffect;
   animation-timing-function: ease-in-out;
   animation-iteration-count: infinite;
+}
+.browser-resizer {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 15px;
+  height: 15px;
+  cursor: nwse-resize; /* Diagonal resize cursor */
+  background-color: #cccccc;
+  border-radius: 3px;
+  z-index: 10;
+}
+.drag-me-indicator {
+  position: absolute;
+  align-items: center;  /* Vertically center align items */ 
+  z-index: 99999;
+  font-size: 14px;
+  cursor: url("/public/openhand.cur");
+  animation: bounce 1.5s infintie;
+  cursor: -webkit-grab;
+  cursor: -moz-grab;
+  cursor: -o-grab;
+  cursor: -ms-grab;
+  cursor: grab;
+  user-select: none;
+  -webkit-user-drag: none; 
+}
+
+.hand-animation {
+  position: absolute;
+  width: 40px;  
+  height: 40px;
+  top: 5px;       /* Adjust as necessary to position near top-left corner */
+  left: 150px;     /* Adjust to position it to the left of the browser */
+  background-image: url("/public/openhand.cur");
+  background-repeat: no-repeat;
+  background-size: contain;
+  animation:  fadeIn 3s forwards, grabRelease 1.5s infinite;
+  opacity: 0;
+  animation-delay: 8;
+}
+
+@keyframes grabRelease {
+  0%, 100% {
+    background-image: url("/public/openhand.cur");
+  }
+  
+  25% {
+    background-image: url("/public/closedhand.cur");
+    transform: translateY(0);
+
+  }
+  
+  50% {
+    background-image: url("/public/closedhand.cur");
+    transform: translateY(-20px);  /* Adjust this value to control the distance the hand moves up */
+  }
+
+  75% {
+    background-image: url("/public/openhand.cur");
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Simple bounce animation */
+@keyframes bounce {
+  0%, 20%, 60%, 100% {
+    transform: translateY(0);
+  }
+  
+  40% {
+    transform: translateY(-10px);
+  }
+  
+  80% {
+    transform: translateY(-5px);
+  }
+}
+
+#text-path {
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+}
+
+/* gallery */
+
+.image-gallery {
+  column-count: 3;
+  column-gap: 4px;
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+}
+
+.gallery-item {
+  /* margin-bottom: 1px; */
+  break-inside: avoid; /* This prevents images from spanning across multiple columns */
+}
+.gallery-item :hover{
+  cursor: pointer;
+}
+.gallery-image {
+  width: 100%;
+  height: auto;
+  border-radius: 4px; /* Optional for styled corners */
+}
+
+.modal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  z-index: 1000; /* Ensure it's on top of other elements */
+}
+
+.modal-content {
+  /* box-shadow: 0px 0px 8px rgba(255, 255, 255, 0.588);  */
+  border-radius: 4px;
+  border: 6px solid rgb(255, 255, 255);
+  /* border-width: 10px; */
+  max-width: 80%;
+  max-height: 80%;
+  margin: auto;
+  pointer-events: none;
+}
+
+.close {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  color: white;
+  font-size: 30px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.6s ease;
+}
+
+.close:hover{
+  color: rgba(185, 50, 50, 0.8)
+}
+.prev, .next {
+  cursor: pointer;
+  position: absolute;
+  /* top: 50%; */
+  width: auto;
+  padding: 10px;
+  margin-left: 10px;
+  /* margin-top: -50px; */
+  color: white;
+  font-weight: bold;
+  font-size: 20px;
+  transition: 0.6s ease;
+  border-radius: 0 3px 3px 0;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.next {
+  right: 0;
+  border-radius: 3px 0 0 3px;
+}
+
+.prev {
+  left: 0;
+  border-radius: 3px 0 0 3px;
+}
+
+/* Hover effect for the arrows */
+.prev:hover, .next:hover {
+  color: rgb(0, 0, 0)
+}
+/* The following styles prevent the modal image from being too large on small screens */
+@media only screen and (max-width: 700px) {
+  .modal-content {
+    max-width: 90%;
+    max-height: 90%;
+  }
+  .next {
+    right: 5%;
+  }
+  .prev {
+    left: 2.5%;
+  }
+  .prev:hover, .next:hover {
+    color: currentColor
+  }
+  .text {
+    font-size: 20vw;
+  }
+}
+
+@media only screen and (min-width: 1200px) {
+  .text{
+    font-size: 14vw;
+  }
+
+}
+@media only screen and (max-width: 1200px) {
+  .image-gallery {
+    column-count: 2;
+  }
+  .text {
+    font-size: 20vw;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .image-gallery {
+    column-count: 1;
+  }
+}
+
+@media only screen and (max-width: 576px) {
+  .image-gallery {
+    column-count: 1;
+  }
+}
+
+/* TEXT */
+.text-animation-container {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.title-container {
+  position: relative;
+}
+
+.text {
+  position: relative;
+  display: flex;
+  overflow: hidden;
+  font-family: sans-serif;
+  opacity: 0;
+  color: rgba(255, 255, 255, 0.683);
+}
+
+.text.show {
+  opacity: 1;
+  animation: slideIn 0.5s forwards;
+  transform: translateY(-100%);
+  display: inline-block;
+}
+
+.text:hover::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0; /* Initial width set to 0 for the sliding effect */
+  height: 2px; /* Adjust the underline thickness as needed */
+  background: linear-gradient(to right, violet, indigo, blue, green, yellow, orange, red);
+  animation: underline 0.8s forwards;
+}
+
+.text span {
+  cursor: pointer;
+
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+
+@keyframes underline {
+  to {
+    width: 100%;
+  }
+}
+.tooltip {
+  position: relative; /* Required to position the tooltip */
+  display: inline-block; /* Ensures the tooltip is only as wide as the title */
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  padding: 5px 0;
+  border-radius: 6px;
+
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+  bottom: 100%;
+  left: 50%;
+  margin-left: -60px; /* Use half of the width (120px / 2) to center the tooltip */
+
+  /* Fade in tooltip - hidden by default */
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible; /* Show the tooltip when hovering */
+  opacity: 1; /* Fade in */
 }

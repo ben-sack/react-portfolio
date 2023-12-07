@@ -13,15 +13,19 @@ const Icon = ({ onClick, children }) => (
 
 const HomeIcon = ({ onClick }) => (
   <Icon>
-    <path d="M12.71 2.29a1 1 0 00-1.42 0l-9 9a1 1 0 000 1.42A1 1 0 003 13h1v7a2 2 0 002 2h12a2 2 0 002-2v-7h1a1 1 0 001-1 1 1 0 00-.29-.71zM6 20v-9.59l6-6 6 6V20z" />{" "}
+    <path d="M12.71 2.29a1 1 0 00-1.42 0l-9 9a1 1 0 000 1.42A1 1 0 003 13h1v7a2 2 0 002 2h12a2 2 0 002-2v-7h1a1 1 0 001-1 1 1 0 00-.29-.71zM6 20v-9.59l6-6 6 6V20z" />
   </Icon>
-
 );
 const ShopIcon = () => (
   <Icon>
-    <path fill="currentColor" fillRule="evenodd" d="M17 7a3 3 0 00-3-3h-4a3 3 0 00-3 3H6a3 3 0 00-3 3v8a3 3 0 003 3h12a3 3 0 003-3v-8a3 3 0 00-3-3h-1zm-3-1h-4a1 1 0 00-1 1h6a1 1 0 00-1-1zM6 9h12a1 1 0 011 1v8a1 1 0 01-1 1H6a1 1 0 01-1-1v-8a1 1 0 011-1z" clipRule="evenodd"/>
+    {/* <path fill="currentColor" fillRule="evenodd" d="M17 7a3 3 0 00-3-3h-4a3 3 0 00-3 3H6a3 3 0 00-3 3v8a3 3 0 003 3h12a3 3 0 003-3v-8a3 3 0 00-3-3h-1zm-3-1h-4a1 1 0 00-1 1h6a1 1 0 00-1-1zM6 9h12a1 1 0 011 1v8a1 1 0 01-1 1H6a1 1 0 01-1-1v-8a1 1 0 011-1z" clipRule="evenodd"/> */}
+    {/* <path fill="currentColor" fillRule="evenodd" d="M12 2a5 5 0 00-5 5v1H6v4h2v5a3 3 0 003 3h6a3 3 0 003-3v-5h2V8h-1V7a5 5 0 00-5-5zm1 9a3 3 0 100-6 3 3 0 000 6zm-1 9a1 1 0 100-2 1 1 0 000 2z" clipRule="evenodd"/> */}
+    <path d="M20 5h-2.586l-.707-.707C16.105 3.492 15.552 3 15 3h-6c-.552 0-1.105.492-1.707 1.293L6.586 5H4c-1.104 0-2 .897-2 2v12c0 1.103.896 2 2 2h16c1.104 0 2-.897 2-2V7c0-1.103-.896-2-2-2zm-8 13c-2.71 0-4.9-2.192-4.9-4.9S9.29 8.2 12 8.2 16.9 10.392 16.9 13.1 14.71 18 12 18zm5.3-7.9c-.625 0-1.131-.506-1.131-1.131s.506-1.131 1.131-1.131 1.131.506 1.13 1.131-.506 1.131-1.131 1.131z" />
+
   </Icon>
 );
+
+
 
 const GitIcon = () => (
   <Icon>
@@ -98,7 +102,7 @@ function Navbar({ isDarkMode }) {
   };
   const icons = [
     { component: <HomeIcon />, path: "/" },
-    { component: <ShopIcon />, path: "/products" },
+    { component: <ShopIcon />, path: "/images" },
     { component: <GitIcon />, path: "/shop" },
     { component: <ContactIcon />, path: "/shop" },
   ];
