@@ -1,27 +1,60 @@
 import React, { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
 import { useImages } from './ImageContext';
+import CustomLoader from './Loader';
+
 
 function ImageGallery() {
   const { images, updateImages } = useImages();
   const [selectedImageIndex, setSelectedImageIndex] = useState(null);
+  const [areImagesLoaded, setAreImagesLoaded] = useState(false);
 
   useEffect(() => {
-    // Fetch images only if the context does not have any
     if (images.length === 0) {
-      const fetchImages = async () => {
-        try {
-          const response = await fetch('http://localhost:8000/images');
-          const data = await response.json();
-          updateImages(data);
-        } catch (error) {
-          console.error('Error fetching images:', error);
-        }
-      };
-
       fetchImages();
+    } else {
+      preloadImages(images);
     }
-  }, [images, updateImages]);
+  }, [images]);
 
+  const fetchImages = async () => {
+    try {
+      const response = await fetch('http://192.168.4.29:8000/images');
+      const data = await response.json();
+      updateImages(data);
+    } catch (error) {
+      console.error('Error fetching images:', error);
+    }
+  };
+
+  const preloadImages = async (imageArray) => {
+    const promises = imageArray.map(image => {
+      return new Promise((resolve, reject) => {
+        const img = new Image();
+        img.src = image.url;
+        img.onload = resolve;
+        img.onerror = reject;
+      });
+    });
+
+    try {
+      await Promise.all(promises);
+      setAreImagesLoaded(true);
+    } catch (error) {
+      console.error('Error preloading images:', error);
+    }
+  };
+
+  // Animation variants for framer-motion
+  const itemVariants = {
+    hidden: { opacity: 0 },
+    visible: i => ({
+      opacity: 1,
+      transition: {
+        delay: i * 0.1,
+      },
+    }),
+  };
 
   const openModal = (index) => {
     setSelectedImageIndex(index);
@@ -45,10 +78,20 @@ function ImageGallery() {
 
   return (
     <div className="image-gallery">
-      {images.map((image, index) => (
-        <div key={image.id} className="gallery-item" onClick={() => openModal(index)}>
+      {!areImagesLoaded && <CustomLoader />}
+
+      {areImagesLoaded && images.map((image, index) => (
+        <motion.div
+          key={image.id}
+          className="gallery-item"
+          onClick={() => openModal(index)}
+          variants={itemVariants}
+          initial="hidden"
+          custom={index}
+          animate="visible"
+        >
           <img src={image.url} alt={image.alt} className="gallery-image" />
-        </div>
+        </motion.div>
       ))}
 
       {selectedImageIndex !== null && (

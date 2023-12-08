@@ -88,7 +88,7 @@ function Navbar({ isDarkMode }) {
 
       // Define the "strength" of the effect.
       const scaleFactor =
-        distance > 100 ? 1 : 1 + (0.2 * (100 - distance)) / 100;
+        distance > 100 ? 1 : 1 + (0.5 * (100 - distance)) / 100;
 
       newScaleFactors.push(scaleFactor);
     }

@@ -7,6 +7,7 @@ import DarkModeContext from './components/DarkModeContext';
 import InteractiveCircles from './components/Circles';
 import ImageGallery from './components/Images';
 import { ImagesProvider } from './components/ImageContext';
+import CustomCursor from './components/Cursor';
 
 function App() {
     const [isDarkMode, setIsDarkMode] = useState(
@@ -30,6 +31,7 @@ function App() {
                 <Router>
                     <ImagesProvider>
                     <div className="App">
+                        <CustomCursor />
                         <InteractiveCircles />
                         <Navbar isDarkMode={isDarkMode} />
                         <Routes>

@@ -35,6 +35,7 @@
 }
 
 body {
+  cursor: none;
   overflow-x: hidden;
 }
 
@@ -106,7 +107,7 @@ h1 {
 .product:hover {
   /* transform: translateY(-2px); */
   opacity: 0.9;
-  cursor: pointer;
+  /* cursor: pointer; */
 }
 
 .product-name {
@@ -120,7 +121,7 @@ button {
   background-color: #007BFF;
   color: #fff;
   border-radius: 4px;
-  cursor: pointer;
+  /* cursor: pointer; */
   transition: background-color 0.2s;
   margin-bottom: 1rem;
 }
@@ -147,6 +148,7 @@ button:hover {
 .navbar {
   position: fixed;
   bottom: 2.5%;      /* Some distance from the bottom */
+  cursor: none;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -174,6 +176,7 @@ button:hover {
   align-items: center;
   justify-content: center;
   transition: transform 0.3s ease;
+  cursor: none;
   
 }
 
@@ -325,8 +328,6 @@ body {
   text-align: right; 
   display: inline-block; 
 }
-
-.title .engineer
 
 .title.hide {
   visibility: hidden;
@@ -546,7 +547,7 @@ body {
   break-inside: avoid; /* This prevents images from spanning across multiple columns */
 }
 .gallery-item :hover{
-  cursor: pointer;
+  /* cursor: pointer; */
 }
 .gallery-image {
   width: 100%;
@@ -585,19 +586,16 @@ body {
   color: white;
   font-size: 30px;
   font-weight: bold;
-  cursor: pointer;
+  /* cursor: pointer; */
   transition: 0.6s ease;
 }
 
-.close:hover{
-  color: rgba(185, 50, 50, 0.8)
-}
+
 .prev, .next {
-  cursor: pointer;
+  /* cursor: pointer; */
   position: absolute;
   /* top: 50%; */
   width: auto;
-  padding: 10px;
   margin-left: 10px;
   /* margin-top: -50px; */
   color: white;
@@ -612,6 +610,7 @@ body {
 .next {
   right: 0;
   border-radius: 3px 0 0 3px;
+  padding: 10px;
 }
 
 .prev {
@@ -619,12 +618,8 @@ body {
   border-radius: 3px 0 0 3px;
 }
 
-/* Hover effect for the arrows */
-.prev:hover, .next:hover {
-  color: rgb(0, 0, 0)
-}
 /* The following styles prevent the modal image from being too large on small screens */
-@media only screen and (max-width: 700px) {
+@media only screen and (max-width: 830) {
   .modal-content {
     max-width: 90%;
     max-height: 90%;
@@ -709,7 +704,7 @@ body {
 }
 
 .text span {
-  cursor: pointer;
+  /* cursor: pointer; */
 
 }
 
@@ -729,4 +724,98 @@ body {
   to {
     width: 100%;
   }
+}
+
+/* .loading-spinner {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 9999;
+}
+
+.loading-spinner > div {
+  border-color: #d9d9d9;
+} */
+/* CustomLoader.css */
+.custom-loader {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 9999;
+}
+
+.loader-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100px; /* Adjust the width of your loader */
+  height: 100px; /* Adjust the height of your loader */
+}
+
+.loader-shape {
+  width: 15px; /* Adjust the width of each shape in your loader */
+  height: 15px; /* Adjust the height of each shape in your loader */
+  margin: 0 5px; /* Adjust the spacing between shapes */
+  border-radius: 50%; /* Adjust the border radius for a circular shape */
+  animation: loaderAnimation 1.5s infinite; /* Adjust the animation duration */
+  opacity: 0;
+}
+
+@keyframes loaderAnimation {
+  0%, 100% {
+    opacity: 0;
+  }
+  33% {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+  }
+  66% {
+    opacity: 1;
+    transform: scale(0.8) rotate(90deg);
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.loader-shape:nth-child(1) {
+  animation-delay: 0.2s; /* Adjust the delay for the first shape */
+  background-color: #3498db; /* Adjust the color for the first shape */
+}
+
+.loader-shape:nth-child(2) {
+  animation-delay: 0.5s; /* Adjust the delay for the second shape */
+  background-color: #e74c3c; /* Adjust the color for the second shape */
+}
+
+.loader-shape:nth-child(3) {
+  animation-delay: 0.8s; /* Adjust the delay for the third shape */
+  background-color: #2ecc71; /* Adjust the color for the second shape */
+}
+
+.custom-cursor {
+  position: fixed;
+  width: 20px;
+  height: 20px;
+  border: 2px dotted #ffffff;
+  border-radius: 50%;
+  mix-blend-mode: difference;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  transition: width 0.3s, height 0.3s;
+  z-index: 10000;
+}
+
+@keyframes moveGradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
+}
+a:-webkit-any-link {
+  cursor: none;
 }
