@@ -1,3 +1,4 @@
+import { transform } from "framer-motion";
 import React, { useState, useRef } from "react";
 import { NavLink } from "react-router-dom";
 
@@ -88,7 +89,7 @@ function Navbar({ isDarkMode }) {
 
       // Define the "strength" of the effect.
       const scaleFactor =
-        distance > 100 ? 1 : 1 + (0.5 * (100 - distance)) / 100;
+        distance > 100 ? 1 : 1 + (0.42 * (100 - distance)) / 100;
 
       newScaleFactors.push(scaleFactor);
     }

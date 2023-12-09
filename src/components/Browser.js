@@ -11,7 +11,9 @@ function Browser({
   isDarkMode,
   codeString,
   initialPosition = { x: 0, y: 0 },
-  isAnimationComplete
+  isAnimationComplete,
+  isVisible, // Receive visibility prop
+  onClose, // Receive onClose prop
 }) {
   const [position, setPosition] = useState(initialPosition);
   const [dragging, setDragging] = useState(false);
@@ -21,9 +23,11 @@ function Browser({
   const [screensWidth, setScreenWidth] = useState(window.innerWidth);
   const isMobile = window.innerWidth <= 768;
 
-  
+  const handleDotClick = () => {
+    // Call the onClose handler when the red dot is clicked
+    onClose();
+  };
 
-  const preventDefault = useCallback((e) => e.preventDefault(), []);
 
   const handleDragMove = useCallback((event) => {
     if (!dragging) return;
@@ -31,22 +35,32 @@ function Browser({
     const clientX = event.type === 'touchmove' ? event.touches[0].clientX : event.clientX;
     const clientY = event.type === 'touchmove' ? event.touches[0].clientY : event.clientY;
 
-    setPosition({ x: clientX - offset.x, y: clientY - offset.y });
+    const newPosition = {
+      x: Math.max(0, Math.min(window.innerWidth - 300, clientX - offset.x)), // Adjust 300 based on your browser width
+      y: Math.max(0, Math.min(window.innerHeight - 200, clientY - offset.y)), // Adjust 200 based on your browser height
+    };
+
+    setPosition(newPosition);
   }, [dragging, offset]);
 
-  const handleDragEnd = useCallback(() => {
+  const handleDragEnd = () => {
     setDragging(false);
     document.removeEventListener('touchmove', preventDefault);
-  }, [preventDefault]);
+    document.body.style.overflow = 'auto'; // Enable body scrolling
+  };
 
-  const handleDragStart = useCallback((event) => {
-    setHasBeenDragged(true);
+
+  const handleDragStart = (event) => {
     const clientX = event.type === 'touchstart' ? event.touches[0].clientX : event.clientX;
     const clientY = event.type === 'touchstart' ? event.touches[0].clientY : event.clientY;
-    event.preventDefault()
+
     setOffset({ x: clientX - position.x, y: clientY - position.y });
     setDragging(true);
-  }, [position]);
+    document.addEventListener('touchmove', preventDefault, { passive: false });
+    document.body.style.overflow = 'hidden'; // Disable body scrolling
+  };
+
+  const preventDefault = useCallback((e) => e.preventDefault(), []);
 
   useEffect(() => {
     const events = {
@@ -91,7 +105,9 @@ function Browser({
         left: `${position.x}px`,
         top: `${position.y}px`,
         maxWidth: screenHeight/1.5,
-        height: isMobile ? screenHeight/1.3 : screenHeight/1.5
+        height: isMobile ? screenHeight/1.3 : screenHeight/1.5,
+        display: isVisible ? 'block' : 'none', // Set display based on visibility
+        touchAction: 'none',
       }}
     >
 
@@ -99,7 +115,7 @@ function Browser({
       <div className={`browser-header ${dragging ? 'dragging' : ''}`} 
             onMouseDown={handleDragStart}
             onTouchStart={handleDragStart}>
-        <div className="browser-dot red-dot"></div>
+        <div className="browser-dot red-dot" onClick={handleDotClick}></div>
         <div className="browser-dot yellow-dot"></div>
         <div className="browser-dot green-dot"></div>
       </div>
