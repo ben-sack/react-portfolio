@@ -2,12 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useImages } from './ImageContext';
 import CustomLoader from './Loader';
-
+import NotFound from './NotFound'
 
 function ImageGallery() {
   const { images, updateImages } = useImages();
   const [selectedImageIndex, setSelectedImageIndex] = useState(null);
   const [areImagesLoaded, setAreImagesLoaded] = useState(false);
+  const [error, setError] = useState(null); // New state for tracking errors
 
   useEffect(() => {
     if (images.length === 0) {
@@ -20,14 +21,21 @@ function ImageGallery() {
   const fetchImages = async () => {
     try {
       const response = await fetch('http://192.168.4.29:8000/images');
+      if (!response.ok) {
+        throw new Error('Failed to fetch images');
+      }
       const data = await response.json();
       updateImages(data);
+      preloadImages(data); // Preload images after fetching
     } catch (error) {
       console.error('Error fetching images:', error);
+      setError(error.message);
     }
   };
 
   const preloadImages = async (imageArray) => {
+    setAreImagesLoaded(false); // Reset loading state before preloading
+
     const promises = imageArray.map(image => {
       return new Promise((resolve, reject) => {
         const img = new Image();
@@ -39,9 +47,10 @@ function ImageGallery() {
 
     try {
       await Promise.all(promises);
-      setAreImagesLoaded(true);
+      setAreImagesLoaded(true); // Set loading state after all images are loaded
     } catch (error) {
       console.error('Error preloading images:', error);
+      setError(error.message);
     }
   };
 
@@ -78,9 +87,11 @@ function ImageGallery() {
 
   return (
     <div className="image-gallery">
-      {!areImagesLoaded && <CustomLoader />}
+      {error && <NotFound />}
 
-      {areImagesLoaded && images.map((image, index) => (
+      {!areImagesLoaded && !error && <CustomLoader />}
+
+      {areImagesLoaded && !error && images.map((image, index) => (
         <motion.div
           key={image.id}
           className="gallery-item"
@@ -93,7 +104,6 @@ function ImageGallery() {
           <img src={image.url} alt={image.alt} className="gallery-image" />
         </motion.div>
       ))}
-
       {selectedImageIndex !== null && (
         <div className="modal" onClick={closeModal}>
           <span className="close">&times;</span>

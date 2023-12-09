@@ -37,7 +37,7 @@ function Title({ isDarkMode, onAnimationComplete }) {
 
     // Animation Completion Check Hook
     useEffect(() => {
-      if (iterations >= 4) {
+      if (iterations >= 2) {
           onAnimationComplete();
           setAnimationComplete(true);
       }
