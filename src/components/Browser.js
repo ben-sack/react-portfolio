@@ -12,8 +12,8 @@ function Browser({
   codeString,
   initialPosition = { x: 0, y: 0 },
   isAnimationComplete,
-  isVisible, // Receive visibility prop
-  onClose, // Receive onClose prop
+  isVisible, 
+  onClose,
 }) {
   const [position, setPosition] = useState(initialPosition);
   const [dragging, setDragging] = useState(false);

@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect } from 'react';
 import Title from './Title';
 import DarkModeContext from './DarkModeContext';
 import Browser from './Browser';
-import AnimatedText from './Writing';
+import home from '../home.json'
 import TextAnimation from './Text';
 
 
@@ -16,10 +16,7 @@ function Home() {
     const [browserVisibility, setBrowserVisibility] = useState({});
     const [activeBrowser, setActiveBrowser] = useState(null);
     // Define different copies for each title
-    const projectCopy = "Here are my projects";
-    const photosCopy = "Check out my photo gallery";
-    const interestsCopy = "Learn about my interests";
-    const workCopy = "Explore my professional work";
+
 
     useEffect(() => {
         const handleResize = () => {
@@ -39,17 +36,17 @@ function Home() {
         if (!openedBrowsers.some((browser) => browser.title === title)) {
             let copy;
             switch (title) {
-                case 'Projects':
-                    copy = projectCopy;
+                case 'projects':
+                    copy = home.projects;
                     break;
-                case 'Photos':
-                    copy = photosCopy;
+                case 'work':
+                    copy = home.work;
                     break;
-                case 'Interests':
-                    copy = interestsCopy;
+                case 'market':
+                    copy = home.market;
                     break;
-                case 'Work':
-                    copy = workCopy;
+                case 'about':
+                    copy = home.about;
                     break;
                 default:
                     copy = ''; // Set a default value or handle additional titles

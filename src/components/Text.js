@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 const TextAnimation = ({ isAnimationComplete, onTitleClick }) => {
-  const titles = ['Projects', 'Photos', 'Interests', 'Work'];
+  const titles = ['about', 'projects', 'market', 'work'];
   const [currentTitleIndex, setCurrentTitleIndex] = useState(0);
 
   useEffect(() => {
