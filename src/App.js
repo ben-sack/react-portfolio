@@ -8,6 +8,7 @@ import InteractiveCircles from './components/Circles';
 import ImageGallery from './components/Images';
 import { ImagesProvider } from './components/ImageContext';
 import CustomCursor from './components/Cursor';
+import Menu from './components/Menu';
 
 function App() {
     const [isDarkMode, setIsDarkMode] = useState(

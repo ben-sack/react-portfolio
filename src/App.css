@@ -30,6 +30,7 @@
 .home {
   text-align: center;
   overflow: hidden;
+  /* z-index: 10; */
 
 }
 
@@ -577,7 +578,7 @@ body {
 }
 
 /* The following styles prevent the modal image from being too large on small screens */
-@media only screen and (max-width: 830) {
+@media only screen and (max-width: 900) {
   .modal-content {
     max-width: 90%;
     max-height: 90%;
@@ -593,6 +594,16 @@ body {
   }
   .text {
     font-size: 20vw;
+  }
+  .menu {
+    position: absolute;
+    display: contents;
+    width: 100%;
+    right: 0;
+    z-index: 9999999;
+  }
+  .menu--1 {
+    transform: scale(0.1);
   }
 }
 
@@ -635,21 +646,18 @@ body {
 }
 
 .text {
+  display: inline-block;
   position: relative;
-  display: flex;
   overflow: hidden;
   font-family: sans-serif;
-  opacity: 0;
-  display: none;
+  opacity: 0; /* Keep hidden initially */
   color: rgba(0, 0, 0, 0.683);
 }
 
 .text.show {
+  /* Make text visible */
   opacity: 1;
-  animation: slideIn 0.5s forwards;
-  transform: translateY(-100%);
-  display: inline-block;
-
+  animation: slideIn 0.5s forwards; /* Make sure it animates in properly */
 }
 
 .text:hover::after {
@@ -855,4 +863,151 @@ a:-webkit-any-link {
   font-size: 18px;
   margin-top: 10px;
   color: #333;
+}
+
+.hamburger-menu {
+  /* Define size and behavior of the clickable area */
+  width: 40px;
+  height: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.menu-line {
+  /* Lines representing the hamburger icon */
+  width: 100%;
+  height: 3px;
+  background-color: #333; /* Adjust color as needed */
+  transition: all 0.3s ease-in-out;
+}
+
+.arrow.open {
+  /* transform: translateY(-70px) */
+  animation: pull-arrow 1s forwards;
+}
+
+.arrow.close {
+  /* transform: translateY(-70px) */
+  animation: pull-arrow-close -arrow 1s forwards;
+}
+/* Transform the lines for "X" when open */
+.menu-line.line1.open {
+  transform: translateY(8px) rotate(45deg);
+}
+
+.menu-line.line2.open {
+  transform: scale(0);
+  opacity: 0; /* hide the middle line */
+}
+
+.menu-line.line3.open {
+  transform: translateY(-8px) rotate(-45deg);
+}
+
+@keyframes pull-arrow {
+  0% {
+      transform: translateY(0px);
+  }
+  50% {
+      transform: translateY(-100px);
+  }
+  100% {
+      transform: translateY(-55px);
+  }
+}
+
+@keyframes pull-arrow-close {
+  0% {
+      transform: translateY(0px);
+  }
+  50% {
+      transform: translateY(100px);
+  }
+  100% {
+      transform: translateY(55px);
+  }
+}
+
+
+
+.menu--1 .line--1,
+  .menu--1 .line--3 {
+    --total-length: 126.64183044433594;
+  }
+
+.menu--1 .line--2 {
+    --total-length: 70;
+  }
+
+.menu--1 input:checked+svg .line--1,
+    .menu--1 input:checked+svg .line--3 {
+      --offset: -94.1149185097;
+    }
+
+.menu--1 input:checked+svg .line--2 {
+      --offset: -50;
+    }
+.cross input:checked+svg .line--1,
+  .cross input:checked+svg .line--3 {
+    --length: 22.627416998;
+  }
+
+.cross input:checked+svg .line--2 {
+    --length: 0;
+  }
+
+.back input:checked+svg .line--1,
+  .back input:checked+svg .line--3 {
+    --length: 8.602325267;
+  }
+.menu--1 {
+  /* position: fixed; */
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+}
+
+.menu--1 label {
+  /* display: flex; */
+  align-items: center;
+}
+
+.menu path {
+  fill: none;
+  stroke: #ffffff;
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  --length: 24;
+  --offset: -38;
+  stroke-dasharray: var(--length) var(--total-length);
+  stroke-dashoffset: var(--offset);
+  transition: all .8s cubic-bezier(.645, .045, .355, 1);
+}
+
+.menu svg {
+  /* transform: scale(0.15); Adjust the scale value as needed for the desired size */
+  height: 5rem;
+}
+
+.menu--1 label {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  position: absolute;
+  right: 0;
+  z-index: 999999999999999999;
+}
+
+
+.menu--1 {
+  transform: scale(0.3);
+  height: 10rem;
+  position: absolute;
+  display: contents;
+  width: 100%;
+  right: 0;
+  z-index: 9999999;
 }
