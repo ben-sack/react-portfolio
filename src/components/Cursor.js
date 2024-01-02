@@ -19,13 +19,13 @@ const CustomCursor = () => {
     // };
 
     const handleHover = (e) => {
-        if (e.target.closest('.dock-item, img, a, .close, .text')) {
+        if (e.target.closest('.dock-item, img, a, .close, .text, .meun-svg')) {
           setIsHoveringLink(true);
         }
       };
  
       const handleLeave = (e) => {
-        if (e.target.closest('.dock-item, img, a, .close, .text')) {
+        if (e.target.closest('.dock-item, img, a, .close, .text, .meun-svg')) {
           setIsHoveringLink(false);
         }
       };

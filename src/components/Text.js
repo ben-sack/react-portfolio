@@ -23,7 +23,7 @@ const TextAnimation = ({ isAnimationComplete, onTitleClick }) => {
           <div
             id={`title-${index}`}
             className={`text ${index < currentTitleIndex ? 'show' : ''}`}
-            onClick={() => onTitleClick(title)} // Step 2
+            onClick={() => onTitleClick(title)}
           >
             {title.split('').map((letter, letterIndex) => (
               <span key={letterIndex} style={{ animationDelay: `${index * 0.5}s, ${letterIndex * 0.1}s` }}>

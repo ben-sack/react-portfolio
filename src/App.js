@@ -9,6 +9,7 @@ import ImageGallery from './components/Images';
 import { ImagesProvider } from './components/ImageContext';
 import CustomCursor from './components/Cursor';
 
+
 function App() {
     const [isDarkMode, setIsDarkMode] = useState(
         window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
@@ -28,8 +29,8 @@ function App() {
 
     return (
         <DarkModeContext.Provider value={{ isDarkMode, setIsDarkMode }}>
+            <ImagesProvider>
                 <Router>
-                    <ImagesProvider>
                     <div className="App">
                         <CustomCursor />
                         <InteractiveCircles />
@@ -39,9 +40,8 @@ function App() {
                             <Route path="/images" element={<ImageGallery />} />
                         </Routes>
                     </div>
-                    </ImagesProvider>
                 </Router>
-
+            </ImagesProvider>
         </DarkModeContext.Provider>
     );
 }

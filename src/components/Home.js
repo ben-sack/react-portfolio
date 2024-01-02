@@ -6,6 +6,9 @@ import home from '../home.json';
 import TextAnimation from './Text';
 import Menu from './Menu';
 import DisablePullToRefresh from './DisablePullToRefresh';
+import Heading from './Heading'
+import Contact from './Contact';
+
 
 function Home() {
     const { isDarkMode } = useContext(DarkModeContext);
@@ -20,9 +23,7 @@ function Home() {
 
     const toggleMenu = () => {
         setMenuOpen((prev) => !prev);
-        console.log(menuOpen);
     };
-
 
     useEffect(() => {
         const handleResize = () => {
@@ -84,8 +85,8 @@ function Home() {
                 isDarkMode={isDarkMode}
                 onAnimationComplete={() => setAnimationComplete(true)}
             />
-
-            <Menu onMenuClick={toggleMenu}></Menu>
+            <Heading isDarkMode={isDarkMode} isAnimationComplete={isAnimationComplete}></Heading>
+            {/* <Menu onMenuClick={toggleMenu}></Menu> */}
 
             {menuOpen && (
                 <TextAnimation
@@ -93,9 +94,10 @@ function Home() {
                     onTitleClick={openBrowser}
                 />
             )}
-
+            <Contact isAnimationComplete={isAnimationComplete}></Contact>
             {openedBrowsers.map((browser, index) => (
                 <Browser
+                    title={activeBrowser}
                     key={index}
                     isDarkMode={isDarkMode}
                     codeString={browser.codeString}
