@@ -85,16 +85,17 @@ function Home() {
                 isDarkMode={isDarkMode}
                 onAnimationComplete={() => setAnimationComplete(true)}
             />
-            <Heading isDarkMode={isDarkMode} isAnimationComplete={isAnimationComplete}></Heading>
-            {/* <Menu onMenuClick={toggleMenu}></Menu> */}
-
+            {/* <Heading isDarkMode={isDarkMode} isAnimationComplete={true}></Heading> */}
+            <Menu onMenuClick={toggleMenu}></Menu> 
+            
             {menuOpen && (
                 <TextAnimation
-                    isAnimationComplete={isAnimationComplete}
+                    isAnimationComplete={true}
                     onTitleClick={openBrowser}
                 />
             )}
-            <Contact isAnimationComplete={isAnimationComplete}></Contact>
+            {/* <Contact isAnimationComplete={true}></Contact> */}
+
             {openedBrowsers.map((browser, index) => (
                 <Browser
                     title={activeBrowser}

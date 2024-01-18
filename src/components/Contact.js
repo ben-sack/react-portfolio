@@ -1,5 +1,5 @@
 import React from 'react';
-
+import Heading from './Heading';
 
 
 const Contact = ({ isAnimationComplete }) => {
@@ -12,10 +12,13 @@ const Contact = ({ isAnimationComplete }) => {
     } : {};
     console.log(isAnimationComplete)
   return (
+    
     <div className="contact-container" style={{
         width: isMobile ? '90%' : '50%',
         ...completedStyle
     }}>
+      <Heading isAnimationComplete={true}></Heading>
+
       <div className="contact-tile"
         style={{
             gridColumnStart: 1,
@@ -24,11 +27,12 @@ const Contact = ({ isAnimationComplete }) => {
             // gridRowEnd: 3,
         }}>
         <i className="fa-solid fa-person-snowboarding"></i>
+
       </div>
       <div className="contact-tile" 
         style={{
             gridColumnStart: 2,
-            gridColumnEnd: 4,
+            gridColumnEnd: 5,
             // gridRowStart: 1,
             // gridRowEnd: 3,
             }}>
@@ -37,8 +41,6 @@ const Contact = ({ isAnimationComplete }) => {
         <p>enter text some more text</p>
         <p>enter text here</p>
         <p>enter text here</p>
-        <p>enter text here</p>
-
         <p>enter text here</p>
 
       </div>
@@ -52,6 +54,10 @@ const Contact = ({ isAnimationComplete }) => {
       <div className="contact-tile">
         <i className="fab fa-instagram contact-media-icon"></i>
       </div>
+      <div className="contact-tile">
+        <i className="fab fa-linkedin-in contact-media-icon"></i>
+      </div>
+
     </div>
   );
 };
